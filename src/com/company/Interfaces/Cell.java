@@ -8,4 +8,16 @@ public class Cell {
         this.rowIndex = rowIndex;
         this.colIndex = colIndex;
     }
+
+    public int getRowIndex() {
+        return this.rowIndex;
+    }
+
+    public int getColIndex() {
+        return this.colIndex;
+    }
+
+    public String toString() {
+        return this.rowIndex + ":" + this.colIndex;
+    }
 }
