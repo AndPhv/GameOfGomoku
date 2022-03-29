@@ -34,7 +34,6 @@ public abstract class DataSet<T> {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
