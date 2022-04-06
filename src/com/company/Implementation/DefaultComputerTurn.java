@@ -216,4 +216,8 @@ public class DefaultComputerTurn implements ComputerTurn {
         }
         throw new ComputerCantMakeTurnException("All cells are filled: "+cells);
     }
+
+    protected boolean isCellEmpty(Cell cell) {
+        return gameTable.getValue(cell.getRowIndex(), cell.getColIndex()) == CellValue.EMPTY;
+    }
 }
