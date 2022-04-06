@@ -42,4 +42,43 @@ public class DefaultWinnerChecker implements WinnerChecker {
         return new DefaultWinnerResult(null);
     }
 
+    protected DataSet<Cell> isWinnerByRow(CellValue cellValue) {
+        for (int i = 0; i < gameTable.getSize(); i++) {
+            DataSet<Cell> cells = new DynaArray<>();
+            for (int j = 0; j < gameTable.getSize(); j++) {
+                if (gameTable.getValue(i, j) == cellValue) {
+                    cells.add(new Cell(i, j));
+                    if (cells.size() == winCount) {
+                        return cells;
+                    }
+                } else {
+                    cells.clear();
+                    if (j > gameTable.getSize() - winCount) {
+                        break;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    protected DataSet<Cell> isWinnerByCol(CellValue cellValue) {
+        for (int i = 0; i < gameTable.getSize(); i++) {
+            DataSet<Cell> cells = new DynaArray<>();
+            for (int j = 0; j < gameTable.getSize(); j++) {
+                if (gameTable.getValue(j, i) == cellValue) {
+                    cells.add(new Cell(j, i));
+                    if (cells.size() == winCount) {
+                        return cells;
+                    }
+                } else {
+                    cells.clear();
+                    if (j > gameTable.getSize() - winCount) {
+                        break;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }
