@@ -81,4 +81,44 @@ public class DefaultWinnerChecker implements WinnerChecker {
         }
         return null;
     }
+
+    protected DataSet<Cell> isWinnerByMainDiagonal(CellValue cellValue) {
+        int winCountMinus1 = winCount - 1;
+        for (int i = 0; i < gameTable.getSize() - winCountMinus1; i++) {
+            for (int j = 0; j < gameTable.getSize() - winCountMinus1; j++) {
+                DataSet<Cell> cells = new DynaArray<>();
+                for (int k = 0; k < winCount; k++) {
+                    if (gameTable.getValue(i + k, j + k) == cellValue) {
+                        cells.add(new Cell(i + k, j + k));
+                        if (cells.size() == winCount) {
+                            return cells;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    protected DataSet<Cell> isWinnerByNotMainDiagonal(CellValue cellValue) {
+        int winCountMinus1 = winCount - 1;
+        for (int i = 0; i < gameTable.getSize() - winCountMinus1; i++) {
+            for (int j = winCountMinus1; j < gameTable.getSize(); j++) {
+                DataSet<Cell> cells = new DynaArray<>();
+                for (int k = 0; k < winCount; k++) {
+                    if (gameTable.getValue(i + k, j - k) == cellValue) {
+                        cells.add(new Cell(i + k, j - k));
+                        if (cells.size() == winCount) {
+                            return cells;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }
