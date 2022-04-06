@@ -5,6 +5,7 @@ import com.company.DataStructures.*;
 import com.company.Implementation.*;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class DefaultComputerTurn implements ComputerTurn {
     private GameTable gameTable;
@@ -38,5 +39,16 @@ public class DefaultComputerTurn implements ComputerTurn {
         Cell cell = new Cell(gameTable.getSize() / 2, gameTable.getSize() / 2);
         gameTable.setValue(cell.getRowIndex(), cell.getColIndex(), CellValue.COMPUTER);
         return cell;
+    }
+
+    protected Cell makeRandomTurn() {
+        DataSet<Cell> emptyCells = getAllEmptyCells();
+        if (emptyCells.size() > 0) {
+            Cell randomCell = emptyCells.get(new Random().nextInt(emptyCells.size()));
+            gameTable.setValue(randomCell.getRowIndex(), randomCell.getColIndex(), CellValue.COMPUTER);
+            return randomCell;
+        } else {
+            throw new ComputerCantMakeTurnException("All cells are filled! Have you checked draw state before call of computer turn?");
+        }
     }
 }
