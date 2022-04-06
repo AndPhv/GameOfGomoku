@@ -189,4 +189,31 @@ public class DefaultComputerTurn implements ComputerTurn {
         gameTable.setValue(cell.getRowIndex(), cell.getColIndex(), CellValue.COMPUTER);
         return cell;
     }
+
+    protected Cell findEmptyCellForComputerTurn(DataSet<Cell> cells) {
+        for (int i = 0; i < cells.size(); i++) {
+            Cell currentCell = cells.get(i);
+            if (gameTable.getValue(currentCell.getRowIndex(), currentCell.getColIndex()) != CellValue.EMPTY) {
+                if (i == 0) {
+                    if(isCellEmpty(cells.get(i + 1))) {
+                        return cells.get(i + 1);
+                    }
+                } else if(i == cells.size() - 1) {
+                    if(isCellEmpty(cells.get(i - 1))) {
+                        return cells.get(i - 1);
+                    }
+                } else {
+                    boolean searchDirectionAsc = new Random().nextBoolean();
+                    int first = searchDirectionAsc ? i + 1 : i - 1;
+                    int second = searchDirectionAsc ? i - 1 : i + 1;
+                    if(isCellEmpty(cells.get(first))) {
+                        return cells.get(first);
+                    } else if(isCellEmpty(cells.get(second))) {
+                        return cells.get(second);
+                    }
+                }
+            }
+        }
+        throw new ComputerCantMakeTurnException("All cells are filled: "+cells);
+    }
 }
