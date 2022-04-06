@@ -63,4 +63,124 @@ public class DefaultComputerTurn implements ComputerTurn {
         }
         return emptyCells;
     }
+
+    protected Cell tryMakeTurn(CellValue cellValue, int notBlankCount) {
+        Cell cell = tryMakeTurnByRow(cellValue, notBlankCount);
+        if (cell != null) {
+            return cell;
+        }
+        cell = tryMakeTurnByCol(cellValue, notBlankCount);
+        if (cell != null) {
+            return cell;
+        }
+        cell = tryMakeTurnByMainDiagonal(cellValue, notBlankCount);
+        if (cell != null) {
+            return cell;
+        }
+        cell = tryMakeTurnByNotMainDiagonal(cellValue, notBlankCount);
+        if (cell != null) {
+            return cell;
+        }
+        return null;
+    }
+
+    protected Cell tryMakeTurnByRow(CellValue cellValue, int notBlankCount) {
+        for (int i = 0; i < gameTable.getSize(); i++) {
+            for (int j = 0; j < gameTable.getSize() - winCount - 1; j++) {
+                boolean hasEmptyCells = false;
+                int count = 0;
+                DataSet<Cell> inspectedCells = new DynaArray<>();
+                for (int k = 0; k < winCount; k++) {
+                    inspectedCells.add(new Cell(i, j + k));
+                    if (gameTable.getValue(i, j + k) == cellValue) {
+                        count++;
+                    } else if (gameTable.getValue(i, j + k) == CellValue.EMPTY) {
+                        hasEmptyCells = true;
+                    } else {
+                        hasEmptyCells = false;
+                        break;
+                    }
+                }
+                if (count == notBlankCount && hasEmptyCells) {
+                    return makeTurnToOneCellFromDataSet(inspectedCells);
+                }
+            }
+        }
+        return null;
+    }
+
+    protected Cell tryMakeTurnByCol(CellValue cellValue, int notBlankCount) {
+        for (int i = 0; i < gameTable.getSize(); i++) {
+            for (int j = 0; j < gameTable.getSize() - winCount - 1; j++) {
+                boolean hasEmptyCells = false;
+                int count = 0;
+                DataSet<Cell> inspectedCells = new DynaArray<>();
+                for (int k = 0; k < winCount; k++) {
+                    inspectedCells.add(new Cell(j + k, i));
+                    if (gameTable.getValue(j + k, i) == cellValue) {
+                        count++;
+                    } else if (gameTable.getValue(j + k, i) == CellValue.EMPTY) {
+                        hasEmptyCells = true;
+                    } else {
+                        hasEmptyCells = false;
+                        break;
+                    }
+                }
+                if (count == notBlankCount && hasEmptyCells) {
+                    return makeTurnToOneCellFromDataSet(inspectedCells);
+                }
+            }
+        }
+        return null;
+    }
+
+    protected Cell tryMakeTurnByMainDiagonal(CellValue cellValue, int notBlankCount) {
+        for (int i = 0; i < gameTable.getSize() - winCount - 1; i++) {
+            for (int j = 0; j < gameTable.getSize() - winCount - 1; j++) {
+                boolean hasEmptyCells = false;
+                int count = 0;
+                DataSet<Cell> inspectedCells = new DynaArray<>();
+                for (int k = 0; k < winCount; k++) {
+                    inspectedCells.add(new Cell(i + k, j + k));
+                    if (gameTable.getValue(i + k, j + k) == cellValue) {
+                        count++;
+                    } else if (gameTable.getValue(i + k, j + k) == CellValue.EMPTY) {
+                        hasEmptyCells = true;
+                    } else {
+                        hasEmptyCells = false;
+                        break;
+                    }
+                }
+                if (count == notBlankCount && hasEmptyCells) {
+                    return makeTurnToOneCellFromDataSet(inspectedCells);
+                }
+            }
+        }
+        return null;
+    }
+
+    protected Cell tryMakeTurnByNotMainDiagonal(CellValue cellValue, int notBlankCount) {
+        for (int i = 0; i < gameTable.getSize() - winCount - 1; i++) {
+            for (int j = winCount - 1; j < gameTable.getSize(); j++) {
+                boolean hasEmptyCells = false;
+                int count = 0;
+                DataSet<Cell> inspectedCells = new DynaArray<>();
+                for (int k = 0; k < winCount; k++) {
+                    inspectedCells.add(new Cell(i + k, j - k));
+                    if (gameTable.getValue(i + k, j - k) == cellValue) {
+                        count++;
+                    } else if (gameTable.getValue(i + k, j - k) == CellValue.EMPTY) {
+                        hasEmptyCells = true;
+                    } else {
+                        hasEmptyCells = false;
+                        break;
+                    }
+                }
+                if (count == notBlankCount && hasEmptyCells) {
+                    return makeTurnToOneCellFromDataSet(inspectedCells);
+                }
+            }
+        }
+        return null;
+    }
 }
