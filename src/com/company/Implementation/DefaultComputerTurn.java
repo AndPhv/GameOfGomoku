@@ -183,4 +183,10 @@ public class DefaultComputerTurn implements ComputerTurn {
         }
         return null;
     }
+
+    protected Cell makeTurnToOneCellFromDataSet(DataSet<Cell> inspectedCells) {
+        Cell cell = findEmptyCellForComputerTurn(inspectedCells);
+        gameTable.setValue(cell.getRowIndex(), cell.getColIndex(), CellValue.COMPUTER);
+        return cell;
+    }
 }
