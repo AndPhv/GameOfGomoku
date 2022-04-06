@@ -51,4 +51,16 @@ public class DefaultComputerTurn implements ComputerTurn {
             throw new ComputerCantMakeTurnException("All cells are filled! Have you checked draw state before call of computer turn?");
         }
     }
+
+    protected DataSet<Cell> getAllEmptyCells(){
+        DataSet<Cell> emptyCells = new DynaArray<>();
+        for (int i = 0; i < gameTable.getSize(); i++) {
+            for (int j = 0; j < gameTable.getSize(); j++) {
+                if (gameTable.isCellFree(i, j)) {
+                    emptyCells.add(new Cell(i, j));
+                }
+            }
+        }
+        return emptyCells;
+    }
 }
