@@ -121,4 +121,20 @@ public class DefaultWinnerChecker implements WinnerChecker {
         }
         return null;
     }
+
+    private static class DefaultWinnerResult implements WinnerResult {
+        private final DataSet<Cell> winnerCells;
+
+        DefaultWinnerResult(DataSet<Cell> winnerCells) {
+            this.winnerCells = winnerCells != null ? DataUtils.newImmutableDataSet(winnerCells) : DataUtils.newImmutableDataSet(new Cell[0]);
+        }
+
+        public DataSet<Cell> getWinnerCells() {
+            return winnerCells;
+        }
+
+        public boolean winnerExists() {
+            return winnerCells.size() > 0;
+        }
+    }
 }
