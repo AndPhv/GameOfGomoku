@@ -34,4 +34,14 @@ public class GUIGomoku extends JFrame {
         computerTurn.setGameTable(gameTable);
         winnerChecker.setGameTable(gameTable);
     }
+
+    protected void drawCellValue(Cell cell) {
+        CellValue cellValue = gameTable.getValue(cell.getRowIndex(), cell.getColIndex());
+        cells[cell.getRowIndex()][cell.getColIndex()].setText(cellValue.getValue());
+        if(cellValue == CellValue.COMPUTER) {
+            cells[cell.getRowIndex()][cell.getColIndex()].setForeground(Color.RED);
+        } else  {
+            cells[cell.getRowIndex()][cell.getColIndex()].setForeground(Color.BLUE);
+        }
+    }
 }
