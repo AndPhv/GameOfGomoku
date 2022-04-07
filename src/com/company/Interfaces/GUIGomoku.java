@@ -44,4 +44,12 @@ public class GUIGomoku extends JFrame {
             cells[cell.getRowIndex()][cell.getColIndex()].setForeground(Color.BLUE);
         }
     }
+
+    protected void markWinnerCells(DataSet<Cell> winnerCells) {
+        for (int i = 0; i < winnerCells.size(); i++) {
+            Cell cell = winnerCells.get(i);
+            cells[cell.getRowIndex()][cell.getColIndex()].setForeground(Color.CYAN);
+            cells[cell.getRowIndex()][cell.getColIndex()].setFont(new Font(Font.SERIF, Font.BOLD, 35));
+        }
+    }
 }
