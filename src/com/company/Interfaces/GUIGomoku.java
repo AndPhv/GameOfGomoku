@@ -28,4 +28,10 @@ public class GUIGomoku extends JFrame {
         isHumanFirstTurn = true;
         createGameUITable();
     }
+
+    protected void initGameComponents(){
+        humanTurn.setGameTable(gameTable);
+        computerTurn.setGameTable(gameTable);
+        winnerChecker.setGameTable(gameTable);
+    }
 }
