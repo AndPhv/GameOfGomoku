@@ -100,4 +100,12 @@ public class GUIGomoku extends JFrame {
             }
         }
     }
+
+    protected void handleGameOver(String message) {
+        if (JOptionPane.showConfirmDialog(this, message) == JOptionPane.YES_OPTION) {
+            startNewGame();
+        } else {
+            stopGame();
+        }
+    }
 }
