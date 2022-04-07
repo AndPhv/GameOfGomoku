@@ -52,4 +52,28 @@ public class GUIGomoku extends JFrame {
             cells[cell.getRowIndex()][cell.getColIndex()].setFont(new Font(Font.SERIF, Font.BOLD, 35));
         }
     }
+
+    protected void createGameUITable() {
+        setLayout(new GridLayout(gameTable.getSize(), gameTable.getSize()));
+        for (int i = 0; i < gameTable.getSize(); i++) {
+            for (int j = 0; j < gameTable.getSize(); j++) {
+                final int row = i;
+                final int col = j;
+                cells[i][j] = new JLabel();
+                cells[i][j].setPreferredSize(new Dimension(45, 45));
+                cells[i][j].setHorizontalAlignment(SwingConstants.CENTER);
+                cells[i][j].setVerticalAlignment(SwingConstants.CENTER);
+                cells[i][j].setFont(new Font(Font.SERIF, Font.PLAIN, 35));
+                cells[i][j].setForeground(Color.BLACK);
+                cells[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                add(cells[i][j]);
+                cells[i][j].addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        handleHumanTurn(row, col);
+                    }
+                });
+            }
+        }
+    }
 }
