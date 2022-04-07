@@ -76,4 +76,20 @@ public class GUIGomoku extends JFrame {
             }
         }
     }
+
+    protected void startNewGame() {
+        isHumanFirstTurn = !isHumanFirstTurn;
+        gameTable.reInit();
+        for (int i = 0; i < gameTable.getSize(); i++) {
+            for (int j = 0; j < gameTable.getSize(); j++) {
+                cells[i][j].setText(gameTable.getValue(i, j).getValue());
+                cells[i][j].setFont(new Font(Font.SERIF, Font.PLAIN, 35));
+                cells[i][j].setForeground(Color.BLACK);
+            }
+        }
+        if (!isHumanFirstTurn) {
+            Cell compCell = computerTurn.makeFirstTurn();
+            drawCellValue(compCell);
+        }
+    }
 }
