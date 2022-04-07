@@ -92,4 +92,12 @@ public class GUIGomoku extends JFrame {
             drawCellValue(compCell);
         }
     }
+
+    protected void stopGame() {
+        for (int i = 0; i < gameTable.getSize(); i++) {
+            for (int j = 0; j < gameTable.getSize(); j++) {
+                cells[i][j].removeMouseListener(cells[i][j].getMouseListeners()[0]);
+            }
+        }
+    }
 }
