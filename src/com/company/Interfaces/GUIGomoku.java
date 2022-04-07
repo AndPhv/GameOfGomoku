@@ -108,4 +108,35 @@ public class GUIGomoku extends JFrame {
             stopGame();
         }
     }
+
+    protected void handleHumanTurn(int row, int col) {
+        if (gameTable.isCellFree(row, col)) {
+            Cell humanCell = humanTurn.makeTurn(row, col);
+            drawCellValue(humanCell);
+            WinnerResult winnerResult = winnerChecker.isWinnerFound(CellValue.HUMAN);
+            if (winnerResult.winnerExists()) {
+                markWinnerCells(winnerResult.getWinnerCells());
+                handleGameOver("Game over: User win!\nNew game?");
+                return;
+            }
+            if (!gameTable.emptyCellExists()) {
+                handleGameOver("Game over: Draw!\nNew game?");
+                return;
+            }
+            Cell compCell = computerTurn.makeTurn();
+            drawCellValue(compCell);
+            winnerResult = winnerChecker.isWinnerFound(CellValue.COMPUTER);
+            if (winnerResult.winnerExists()) {
+                markWinnerCells(winnerResult.getWinnerCells());
+                handleGameOver("Game over: Computer wins!\nNew game?");
+                return;
+            }
+            if (!gameTable.emptyCellExists()) {
+                handleGameOver("Game over: Draw!\nNew game?");
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Cell is not free! Click on free cell!");
+        }
+    }
 }
